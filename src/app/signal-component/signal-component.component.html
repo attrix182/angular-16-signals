@@ -1,0 +1,23 @@
+<section class="container">
+  <form [formGroup]="form">
+    <section class="row">
+      <div class="col-10">
+        <input
+          placeholder="Item name"
+          id="item"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="col-2">
+        <button (click)="addItem()" class="btn btn-primary">+</button>
+      </div>
+    </section>
+  </form>
+
+  <section>
+    <ul>
+      <li>Example</li>
+    </ul>
+  </section>
+</section>
