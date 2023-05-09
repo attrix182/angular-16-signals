@@ -1,29 +1,58 @@
-import { Component, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, effect, signal } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
-export interface ItemModel {
-  name: string;
+export interface TaskModel {
+  description: string;
   check: boolean;
 }
 @Component({
   selector: 'app-signal-component',
   templateUrl: './signal-component.component.html',
-  styleUrls: ['./signal-component.component.css'],
+  styleUrls: ['./signal-component.component.scss']
 })
 export class SignalComponentComponent {
-  items = signal<ItemModel[]>([]);
+  tasks = signal<TaskModel[]>(JSON.parse(localStorage.getItem('tasks') || '[]'));
   form: any;
 
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit() {
-    this.form = new FormGroup({
-      name: new FormControl(''),
-      check: new FormControl(''),
+  constructor() {
+    effect(() => {
+      localStorage.setItem('tasks', JSON.stringify(this.tasks()));
     });
   }
 
-  addItem() {
-    this.items.update((value) => value + this.form.value);
+  ngOnInit() {
+    this.form = new FormGroup({
+      description: new FormControl(''),
+      check: new FormControl('')
+    });
+  }
+
+  deleteAllTasks() {
+    this.tasks.set([]);
+  }
+  
+  addTask() {
+    this.tasks.update((value) => [...value, { description: this.form.value.description, check: false }]);
+    this.form.reset();
+  }
+
+  toggleCompletedTask(task: TaskModel) {
+    task.check ? this.undoMarkAsComplete(task) : this.markAsComplete(task);
+  }
+
+  markAsComplete(task: TaskModel) {
+    this.tasks.update((value) => [
+      ...value.slice(0, this.tasks().indexOf(task)),
+      { ...task, check: true },
+      ...value.slice(this.tasks().indexOf(task) + 1)
+    ]);
+  }
+
+  undoMarkAsComplete(task: TaskModel) {
+    this.tasks.update((value) => [
+      ...value.slice(0, this.tasks().indexOf(task)),
+      { ...task, check: false },
+      ...value.slice(this.tasks().indexOf(task) + 1)
+    ]);
   }
 }

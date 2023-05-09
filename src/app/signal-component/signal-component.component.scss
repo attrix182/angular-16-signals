@@ -1,0 +1,128 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+header {
+  display: flex;
+  gap: 10px;
+
+  input {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1.3px solid var(--primary);
+    border-bottom: 1px solid var(--secondary);
+    padding: 8px;
+    font-size: 1.1em;
+    outline: none;
+    caret-color: var(--secondary);
+  }
+
+  input:hover {
+    border: 1.3px solid var(--secondary);
+  }
+
+  .btn-add {
+    color: #ecf0f1;
+    font-size: 17px;
+    background-color: var(--secondary);
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 6px 0px var(--tertiary);
+    transition: all 0.1s;
+    width: 45px;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  .btn-add:active {
+    box-shadow: 0px 2px 0px #d35400;
+    position: relative;
+    top: 2px;
+  }
+
+  .btn-add:hover {
+    background-color: var(--quarternary);
+    border: 1px solid var(--primary);
+    box-shadow: 0px 6px 0px var(--quarternary);
+  }
+}
+
+.card {
+
+h1{
+  padding-right: 10px;
+  text-align: start;
+  color: var(--secondary);
+}
+
+  max-width: 650px;
+  margin-top: 2em;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  background-color: rgb(234, 231, 231);
+
+  .button-delete {
+    padding: 0.1em 0.25em;
+    width: 13em;
+    height: 4.2em;
+    border-radius: 0.3em;
+    font-size: 12px;
+    border: 0px;
+    background-color: #ffffff00;
+  }
+
+  .button-delete span {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0.4em;
+    width: 8em;
+    height: 2.5em;
+    background-color: var(--secondary);
+    border-radius: 0.2em;
+    font-size: 1.5em;
+    color: #fff;
+    border: 0.08em solid var(--quarternary);
+    box-shadow: 0 0.4em 0.1em 0.019em var(--tertiary);
+  }
+
+  .button-delete span:hover {
+    transition: all 0.5s;
+    transform: translate(0, 0.4em);
+  }
+
+  .button-delete span:not(hover) {
+    transition: all 1s;
+  }
+}
+
+form {
+  padding: 20px;
+}
+
+li {
+  list-style-type: square;
+  user-select: none;
+  cursor: pointer;
+
+  span {
+    list-style-type: square;
+    font-size: 1.3em;
+  }
+  .completed {
+    text-decoration: line-through;
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

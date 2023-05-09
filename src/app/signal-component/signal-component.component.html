@@ -1,23 +1,36 @@
-<section class="container">
-  <form [formGroup]="form">
-    <section class="row">
-      <div class="col-10">
-        <input
-          placeholder="Item name"
-          id="item"
-          type="text"
-          class="form-control"
-        />
-      </div>
-      <div class="col-2">
-        <button (click)="addItem()" class="btn btn-primary">+</button>
+<div class="container">
+
+  <section class="card">
+    <h1>Tasks manager</h1>
+    <form [formGroup]="form">
+      <header>
+        <div>
+          <input
+            formControlName="description"
+            placeholder="Task description..."
+            id="item"
+            type="text"
+            class="form-control"
+          />
+        </div>
+        <div>
+          <button (click)="addTask()" class="btn-add">+</button>
+        </div>
+      </header>
+    </form>
+    <section>
+      <ul *ngFor="let task of tasks()">
+        <li>
+          <span [class.completed]="task.check" (click)="toggleCompletedTask(task)">{{ task.description}}</span>
+        </li>
+      </ul>
+      <div *ngIf="tasks().length">
+        <footer>
+          <button class="button-delete" (click)="deleteAllTasks()">
+            <span> Delete all tasks </span>
+          </button>
+        </footer>
       </div>
     </section>
-  </form>
-
-  <section>
-    <ul>
-      <li>Example</li>
-    </ul>
   </section>
-</section>
+</div>
