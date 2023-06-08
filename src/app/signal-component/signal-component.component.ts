@@ -1,5 +1,6 @@
 import { Component, effect, signal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { SignalTasksService } from './signal-tasks.service';
 
 export interface TaskModel {
   description: string;
@@ -11,12 +12,13 @@ export interface TaskModel {
   styleUrls: ['./signal-component.component.scss']
 })
 export class SignalComponentComponent {
-  tasks = signal<TaskModel[]>(JSON.parse(localStorage.getItem('tasks') || '[]'));
   form: any;
+  tasks: any = []
 
-  constructor() {
+  constructor(private signalSvc: SignalTasksService) {
     effect(() => {
-      localStorage.setItem('tasks', JSON.stringify(this.tasks()));
+      this.tasks = this.signalSvc.tasks();
+      localStorage.setItem('tasks', JSON.stringify(this.signalSvc.tasks()));
     });
   }
 
@@ -27,32 +29,35 @@ export class SignalComponentComponent {
     });
   }
 
-  deleteAllTasks() {
-    this.tasks.set([]);
-  }
+
   
   addTask() {
-    this.tasks.update((value) => [...value, { description: this.form.value.description, check: false }]);
+    if(!this.form.value.description) return;
+    this.signalSvc.addTask(this.form.value);
     this.form.reset();
   }
 
+  undoMarkAsComplete(task: TaskModel) {
+    this.signalSvc.undoMarkAsComplete(task);
+  }
+
+  deleteAllTasks() {
+    this.signalSvc.deleteAllTasks();
+  }
+
   toggleCompletedTask(task: TaskModel) {
-    task.check ? this.undoMarkAsComplete(task) : this.markAsComplete(task);
+    this.signalSvc.toggleCompletedTask(task);
   }
 
   markAsComplete(task: TaskModel) {
-    this.tasks.update((value) => [
-      ...value.slice(0, this.tasks().indexOf(task)),
-      { ...task, check: true },
-      ...value.slice(this.tasks().indexOf(task) + 1)
-    ]);
+    this.signalSvc.markAsComplete(task);
   }
 
-  undoMarkAsComplete(task: TaskModel) {
-    this.tasks.update((value) => [
-      ...value.slice(0, this.tasks().indexOf(task)),
-      { ...task, check: false },
-      ...value.slice(this.tasks().indexOf(task) + 1)
-    ]);
-  }
+
+
+
+
+
+
+
 }
