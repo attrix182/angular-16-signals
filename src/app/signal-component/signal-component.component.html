@@ -20,7 +20,12 @@
     <section>
       <ul *ngFor="let task of tasks">
         <li class="card__item">
-          <span class="card__item__text" [class.card__item-completed]="task.check" (click)="toggleCompletedTask(task)">{{ task.description }}</span>
+          <span
+            class="card__item__text"
+            [class.card__item-completed]="task.check"
+            (click)="toggleCompletedTask(task)"
+            >{{ task.description }}</span
+          >
         </li>
       </ul>
       <div *ngIf="tasks.length">

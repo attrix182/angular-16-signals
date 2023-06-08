@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SignalTasksService } from './signal-tasks.service';
 
@@ -13,7 +13,7 @@ export interface TaskModel {
 })
 export class SignalComponentComponent {
   form: any;
-  tasks: any = []
+  tasks: any = [];
 
   constructor(private signalSvc: SignalTasksService) {
     effect(() => {
@@ -29,10 +29,8 @@ export class SignalComponentComponent {
     });
   }
 
-
-  
   addTask() {
-    if(!this.form.value.description) return;
+    if (!this.form.value.description) return;
     this.signalSvc.addTask(this.form.value);
     this.form.reset();
   }
@@ -52,12 +50,4 @@ export class SignalComponentComponent {
   markAsComplete(task: TaskModel) {
     this.signalSvc.markAsComplete(task);
   }
-
-
-
-
-
-
-
-
 }
